@@ -36,8 +36,7 @@ public class UploadFileController {
 	public BodyBuilder uploadImg(@RequestParam("file") MultipartFile file) throws IOException  {
 		
 		System.out.println("Original Image Byte Size - " + file.getBytes().length);
-		Image img = new Image(file.getOriginalFilename(), file.getContentType(), file.getBytes());
-		compressBytes(file.getBytes());
+		Image img = new Image(file.getOriginalFilename(), file.getContentType(), compressBytes(file.getBytes()));
 		imageRepository.save(img);
 		
 		return null;
@@ -46,8 +45,7 @@ public class UploadFileController {
 	@GetMapping(path = { "/get/{imageName}" })
 	public Image getImage(@PathVariable("imageName") String imageName) throws IOException {
 		final Optional<Image> retrievedImage = imageRepository.findByName(imageName);
-		Image img = new Image(retrievedImage.get().getName(), retrievedImage.get().getType(),
-				retrievedImage.get().getPicByte());
+		Image img = new Image(retrievedImage.get().getName(), retrievedImage.get().getType(), decompressBytes(retrievedImage.get().getPicByte()));
 		return img;
 	}
 	

@@ -29,7 +29,7 @@ function App() {
   }
 
   async function getImg(){
-    let {data} = await api.get(`${apiRoutes.GET_IMG}/agora.png`);
+    let {data} = await api.get(`${apiRoutes.GET_IMG}/Captura de tela de 2020-06-09 10-54-17.png`);
     console.log(data);
     setImg('data:image/png;base64,'+ data.picByte)
   }
@@ -38,6 +38,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={img} className="App-logo" alt="logo" />
+        <input type="file" onChange={e => upload(e)} />
         <p>
           GG <code>src/App.js</code> and save to reload.
         </p>
@@ -50,7 +51,6 @@ function App() {
           Learn React
         </a>
       </header>
-      <input type="file" onChange={e => upload(e)} />
     </div>
   );
 }
